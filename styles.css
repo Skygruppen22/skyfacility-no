@@ -1107,3 +1107,62 @@ button, input, textarea { font: inherit; color: inherit; }
   opacity: 0.65;
   cursor: wait;
 }
+
+
+/* Package picker polish */
+.progress-track {
+  width: var(--card-w);
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: -0.35rem;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ctrl-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.ctrl-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.card-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-title {
+  font-size: clamp(1.35rem, 4vw, 1.55rem);
+}
+.card-stamp {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 0.6rem;
+}
+.deck-meta {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+.deck-meta span {
+  color: var(--paper-2);
+  font-weight: 500;
+}
+.help-line {
+  min-height: 1.3em;
+}
+.plan-list li span:last-child {
+  color: var(--keep);
+  font-weight: 600;
+}

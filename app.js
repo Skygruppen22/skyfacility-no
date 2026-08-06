@@ -1,22 +1,22 @@
-/* Sky Facility Drift AS — site logic */
+/* Sky Facility Drift AS site logic */
 
 const SERVICES = [
   {
     id: "kontorvask",
     kicker: "Kontor",
     title: "Kontorvask",
-    short: "Rent kontor, roligere hverdag. Vi holder arbeidsplassen pen — uten at det forstyrrer de som jobber.",
-    desc: "Daglig eller ukentlig vask av kontorlandskap, møterom, kjøkkenkrok og toaletter. Faste tider, faste folk, og et resultat du merker når du kommer på jobb.",
-    tags: ["Fast avtale", "Fleksible tider", "Kontor"],
+    short: "Et rent kontor gir ro i hverdagen. Vi vasker når det passer dere, uten støy midt i arbeidstiden.",
+    desc: "Vi tar kontorlandskap, møterom, kjøkkenkrok og toaletter. Dere får faste tider og faste folk, så det bare er i orden når de ansatte kommer på jobb.",
+    tags: ["Fast avtale", "Etter åpningstid", "Kontor"],
     image: "assets/kontorvask.jpg",
     alt: "Kontor klart for arbeidsdagen"
   },
   {
     id: "trappevask",
-    kicker: "Trapp & felles",
+    kicker: "Trapp",
     title: "Trappevask",
-    short: "Trappa er det første folk ser. Vi holder den ren, uke etter uke.",
-    desc: "Vask av trappeoppgang, rekkverk, dørpartier, heis og inngang. Passer sameier, borettslag under forvaltning og næringsbygg der fellesarealet skal holde standard.",
+    short: "Trappa er det første beboere og besøkende ser. Vi holder den ren uke etter uke.",
+    desc: "Vi vasker trappeoppgang, rekkverk, dører, heis og inngang. Passer sameier, forvaltning og næringsbygg som vil se velholdte ut.",
     tags: ["Ukentlig", "Sameie", "Næringsbygg"],
     image: "assets/trappevask.jpg",
     alt: "Lys og ren trappeoppgang"
@@ -25,9 +25,9 @@ const SERVICES = [
     id: "garasjevask",
     kicker: "Garasje",
     title: "Garasjevask",
-    short: "Mindre støv, mindre grus, penere anlegg — også under bakken.",
-    desc: "Feiing og vask av parkeringskjeller og garasjeanlegg. Vi tar unna sand, salt og søl slik at anlegget ser vedlikeholdt ut og er tryggere å ferdes i.",
-    tags: ["Periodisk", "Kjeller", "Anlegg"],
+    short: "Mindre støv og grus i parkeringsanlegget. Tryggere å gå, penere å se på.",
+    desc: "Vi feier og vasker parkeringskjeller og garasje. Sand, salt og søl blir tatt jevnlig, så anlegget holder seg i orden.",
+    tags: ["Etter avtale", "Kjeller", "Anlegg"],
     image: "assets/garasjevask.jpg",
     alt: "Ren parkeringskjeller"
   },
@@ -35,19 +35,19 @@ const SERVICES = [
     id: "byggevask",
     kicker: "Bygg",
     title: "Byggevask",
-    short: "Når prosjektet nærmer seg slutt, rydder vi vei for overlevering.",
-    desc: "Grovvask underveis og finvask før overtakelse. Vi jobber etter fremdriften på bygget og leverer flater som er klare for inspeksjon og innflytting.",
-    tags: ["Prosjekt", "Overlevering", "Entreprise"],
+    short: "Når bygget skal overleveres, sørger vi for at det er klart til inspeksjon og innflytting.",
+    desc: "Grovvask underveis og finvask før overtakelse. Vi følger fremdriften på prosjektet og leverer flater som tåler kritisk blikk.",
+    tags: ["Prosjekt", "Overlevering", "Bygg"],
     image: "assets/byggevask.jpg",
     alt: "Bygg klart etter sluttrengjøring"
   },
   {
     id: "etterrehab",
-    kicker: "Rehab",
-    title: "Etter rehab",
-    short: "Støvet etter oppussing skal ikke bli leietakers problem.",
-    desc: "Grundig renhold etter rehabilitering og ombygging — støv, sparkel og byggestøv tas skikkelig, slik at lokalet kan tas i bruk med en gang.",
-    tags: ["Rehab", "Engangs", "Detaljer"],
+    kicker: "Oppussing",
+    title: "Etter oppussing",
+    short: "Støvet etter rehabilitering skal ikke bli leietakers problem.",
+    desc: "Vi tar grundig renhold etter rehabilitering og ombygging. Støv, sparkel og byggestøv blir fjernet, så lokalet kan brukes med en gang.",
+    tags: ["Engangs", "Rehab", "Detaljer"],
     image: "assets/etterrehab.jpg",
     alt: "Inngangsparti klart etter rehab"
   },
@@ -55,8 +55,8 @@ const SERVICES = [
     id: "vinduspuss",
     kicker: "Vinduer",
     title: "Vinduspuss",
-    short: "Blanke vinduer gir bedre dagslys og et mer profesjonelt uttrykk.",
-    desc: "Planlagt vinduspuss for kontor og næringsfasade. Inn- og utvendig etter avtale — tilpasset sesong og adkomst.",
+    short: "Blanke vinduer gir mer dagslys og et ryddigere inntrykk utenfra.",
+    desc: "Planlagt vinduspuss for kontor og næringsfasade. Innvendig og utvendig etter avtale, tilpasset sesong og hvordan vi kommer til.",
     tags: ["Fasade", "Planlagt", "Kontor"],
     image: "assets/vinduspuss.jpg",
     alt: "Blanke vinduer på næringsbygg"
@@ -65,9 +65,9 @@ const SERVICES = [
     id: "industrivask",
     kicker: "Lager",
     title: "Lager og industri",
-    short: "Store gulv, tydelige soner, maskiner som tar unna.",
-    desc: "Renhold av lager og enklere industrilokaler med maskinelt gulvrenhold der det trengs. Vi holder gangareal og arbeidsflater i orden.",
-    tags: ["Lager", "Maskin", "Gulv"],
+    short: "Store gulv og travle soner. Vi holder gangareal og arbeidsflater i orden.",
+    desc: "Renhold av lager og enklere industrilokaler. Der det trengs, bruker vi maskin på gulvene så det går unna og resultatet holder.",
+    tags: ["Lager", "Gulv", "Etter behov"],
     image: "assets/industrivask.jpg",
     alt: "Lagerhall med rent gulv"
   },
@@ -75,9 +75,9 @@ const SERVICES = [
     id: "periodisk",
     kicker: "Storvask",
     title: "Periodisk storvask",
-    short: "Det lille ekstra — lister, glass og flater som daglig vask ikke rekker.",
-    desc: "Planlagt dypere renhold av møterom, fellesareal og detaljer. Typisk noen ganger i året, i tillegg til den faste avtalen.",
-    tags: ["Kvartal", "Dypere", "Plan"],
+    short: "Det som daglig vask ikke rekker: lister, glass og flater som trenger et ekstra tak.",
+    desc: "Noen ganger i året tar vi en dypere runde i møterom og fellesareal. Passer godt som tillegg til den faste avtalen.",
+    tags: ["Noen ganger i året", "Dypere vask", "Tillegg"],
     image: "assets/periodisk.jpg",
     alt: "Møterom etter storvask"
   },
@@ -85,9 +85,9 @@ const SERVICES = [
     id: "fellesareal",
     kicker: "Lobby",
     title: "Lobby og fellesareal",
-    short: "Førsteinntrykket i resepsjon og fellesrom — hver dag.",
-    desc: "Renhold av lobby, resepsjon, toaletter og fellesmøterom. Der leietakere, kunder og gjester møter bygget først.",
-    tags: ["Resepsjon", "Synlig", "Daglig"],
+    short: "Førsteinntrykket i resepsjon og fellesrom. Hver dag.",
+    desc: "Vi holder lobby, resepsjon, toaletter og fellesmøterom i orden. Der kunder, leietakere og gjester møter bygget først.",
+    tags: ["Resepsjon", "Synlig", "Jevnlig"],
     image: "assets/fellesareal.jpg",
     alt: "Velkommen i ren lobby"
   },
@@ -95,13 +95,13 @@ const SERVICES = [
     id: "hygiene",
     kicker: "Toaletter",
     title: "Toaletter og hygiene",
-    short: "Toaletter som alltid føles i orden — uansett hvor travelt det er.",
-    desc: "Ekstra oppfølging av toaletter og hygienepunkter i næringsbygg. Frekvens tilpasses hvor mange som bruker dem.",
-    tags: ["Toaletter", "Frekvens", "Hygiene"],
+    short: "Toaletter som føles i orden, også når det er fullt hus.",
+    desc: "Ekstra oppfølging av toaletter i næringsbygg. Vi tilpasser hvor ofte ut fra hvor mange som bruker dem.",
+    tags: ["Toaletter", "Ofte nok", "Hygiene"],
     image: "assets/hygiene.jpg",
     alt: "Rent toalett i næringsbygg"
   }
-];
+]];
 
 const STORAGE = {
   keep: "sky_facility_keep",
@@ -158,8 +158,13 @@ function updateCounts() {
   $("#keep-count").textContent = state.keep.length;
   const rem = remaining().length;
   const done = SERVICES.length - rem;
-  $("#progress-current").textContent = Math.min(done + (rem ? 1 : 0), SERVICES.length) || (done ? SERVICES.length : 1);
-  $("#progress-total").textContent = SERVICES.length;
+  const cur = Math.min(done + (rem ? 1 : 0), SERVICES.length) || (done ? SERVICES.length : 1);
+  $("#progress-current").textContent = String(cur);
+  $("#progress-total").textContent = String(SERVICES.length);
+  const label = $("#progress-label");
+  if (label) label.textContent = rem ? (cur + " av " + SERVICES.length) : (SERVICES.length + " av " + SERVICES.length);
+  const fill = $("#progress-fill");
+  if (fill) fill.style.width = Math.round((done / SERVICES.length) * 100) + "%";
   syncHiddenFields();
 }
 
@@ -181,7 +186,7 @@ function syncHiddenFields() {
     return;
   }
   note.hidden = false;
-  note.textContent = "Du har valgt: " + kept.map((s) => s.title).join(" · ");
+  note.textContent = "Du har valgt: " + kept.map((s) => s.title).join(", ");
 }
 
 function renderPanel(type) {
@@ -232,7 +237,7 @@ function renderStack() {
 
   if (rem.length === 0) {
     showPlan();
-    setStatus("Ferdig — se valgene dine under.");
+    setStatus("Ferdig. Se valgene dine under, og send forespørsel.");
     return;
   }
   $("#plan-summary").hidden = true;
@@ -252,8 +257,8 @@ function renderStack() {
     card.innerHTML = `
       <div class="card-media">
         <img src="${svc.image}" alt="${svc.alt}" draggable="false" width="800" height="480" />
-        <div class="card-stamp card-stamp--keep">Ja takk</div>
-        <div class="card-stamp card-stamp--skip">Nei takk</div>
+        <div class="card-stamp card-stamp--keep">Ta med</div>
+        <div class="card-stamp card-stamp--skip">Hopp over</div>
       </div>
       <div class="card-body">
         <div class="card-kicker">${svc.kicker}</div>
@@ -339,11 +344,11 @@ function decide(dir) {
   if (dir === "keep") {
     if (!state.keep.includes(id)) state.keep.push(id);
     state.skip = state.skip.filter((x) => x !== id);
-    setStatus(s ? `Tatt med: ${s.title}` : "Tatt med");
+    setStatus(s ? `${s.title} er tatt med` : "Tatt med");
   } else {
     if (!state.skip.includes(id)) state.skip.push(id);
     state.keep = state.keep.filter((x) => x !== id);
-    setStatus(s ? `Hoppet over: ${s.title}` : "Hoppet over");
+    setStatus(s ? `${s.title} er hoppet over` : "Hoppet over");
   }
   save();
 
@@ -361,11 +366,11 @@ function showPlan() {
   const list = $("#plan-list");
   list.innerHTML = "";
   if (!kept.length) {
-    $("#plan-title").textContent = "Ingen tjenester valgt";
-    $("#plan-lead").textContent = "Du hoppet over alle. Prøv igjen, eller skriv fritt i skjemaet under.";
+    $("#plan-title").textContent = "Ingen tjenester valgt ennå";
+    $("#plan-lead").textContent = "Du hoppet over alle denne gangen. Prøv igjen, eller beskriv behovet i skjemaet under.";
   } else {
-    $("#plan-title").textContent = "Dette vil du ha med";
-    $("#plan-lead").textContent = "Fyll ut skjemaet under — valgene dine følger med på e-post til oss.";
+    $("#plan-title").textContent = "Dette vil du ha tilbud på";
+    $("#plan-lead").textContent = "Fyll ut skjemaet under. Valgene dine følger med når du sender.";
     kept.forEach((s) => {
       const li = document.createElement("li");
       li.innerHTML = `<img src="${s.image}" alt="" width="64" height="48" /><div><strong>${s.title}</strong><span>${s.short}</span></div><span>✓</span>`;
@@ -401,7 +406,7 @@ function resetDeck() {
     ta.value = "";
     delete ta.dataset.fromSwipe;
   }
-  setStatus("Dra kortet, eller bruk knappene. Tastatur: ← →");
+  setStatus("Dra kortet eller bruk knappene under.");
   renderStack();
   maybeTutorial();
 }
@@ -432,10 +437,10 @@ async function submitForm(e) {
   data.set("_subject", `Ny henvendelse: ${data.get("bedrift") || "skyfacility.no"}`);
 
   btn.disabled = true;
-  btn.textContent = "Sender…";
+  btn.textContent = "Sender...";
   status.hidden = false;
   status.className = "form-status";
-  status.textContent = "Sender meldingen til oss…";
+  status.textContent = "Sender meldingen til oss...";
 
   try {
     const res = await fetch(FORM_ENDPOINT, {
@@ -447,7 +452,7 @@ async function submitForm(e) {
 
     if (res.ok) {
       status.className = "form-status ok";
-      status.textContent = "Takk! Vi har mottatt henvendelsen og tar kontakt snart.";
+      status.textContent = "Takk. Vi har fått henvendelsen og tar kontakt snart.";
       form.reset();
       // restore hidden after reset
       syncHiddenFields();
@@ -473,7 +478,7 @@ async function submitForm(e) {
     status.className = "form-status warn";
     status.innerHTML =
       "Skjemaet trenger en engangsbekreftelse på e-post første gang. " +
-      "Vi åpner e-postklienten din som reserve — trykk send der. " +
+      "Vi åpner e-postprogrammet ditt som reserve. Trykk send der. " +
       `<a href="mailto:hei@skyfacility.no?subject=${subject}&body=${body}">Åpne e-post</a>`;
     window.location.href = `mailto:hei@skyfacility.no?subject=${subject}&body=${body}`;
     btn.disabled = false;
