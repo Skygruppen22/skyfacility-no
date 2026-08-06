@@ -1,44 +1,1167 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nb">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sky Facility</title>
-  <meta name="description" content="Sky Facility" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sky Renhold · Velg tjenester</title>
+  <meta name="description" content="Premium renhold for bolig og næring. Sveip for å velge tjenestene du vil beholde." />
+  <meta name="theme-color" content="#0c100e" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    :root { color-scheme: light dark; }
-    * { box-sizing: border-box; }
+    :root {
+      --ink: #0c100e;
+      --ink-2: #151b18;
+      --ink-3: #1e2722;
+      --fog: #e8ebe6;
+      --mist: #b7c0b8;
+      --sage: #8fa88c;
+      --sage-bright: #a8c4a3;
+      --gold: #c4b08a;
+      --gold-soft: rgba(196, 176, 138, 0.22);
+      --danger: #c47a72;
+      --ok: #7a9e78;
+      --card-w: min(420px, calc(100vw - 2rem));
+      --radius: 18px;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-body: "Outfit", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      margin: 0; min-height: 100vh; display: grid; place-items: center;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 20% 0%, #dbeafe 0%, transparent 50%),
-                  radial-gradient(900px 500px at 90% 20%, #e0e7ff 0%, transparent 45%),
-                  #0b1220;
-      color: #e8eefc;
+      margin: 0;
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--fog);
+      background: var(--ink);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    main {
-      width: min(640px, 92vw);
-      padding: 2.5rem;
-      border: 1px solid rgba(255,255,255,.12);
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(143, 168, 140, 0.12), transparent 55%),
+        radial-gradient(700px 420px at 100% 0%, rgba(196, 176, 138, 0.08), transparent 50%),
+        linear-gradient(180deg, #0c100e 0%, #0f1512 50%, #0c100e 100%);
+      z-index: -2;
+    }
+
+    /* grain */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.04;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; }
+
+    /* ===== TOP BAR ===== */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1.25rem;
+      background: linear-gradient(180deg, rgba(12,16,14,0.92), rgba(12,16,14,0.55) 70%, transparent);
+      backdrop-filter: blur(8px);
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+      text-decoration: none;
+    }
+    .brand strong {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+    }
+    .brand span {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mist);
+    }
+    .top-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .chip {
+      appearance: none;
+      border: 1px solid rgba(232,235,230,0.12);
+      background: rgba(30,39,34,0.7);
+      color: var(--fog);
+      border-radius: 999px;
+      padding: 0.45rem 0.85rem;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 400;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+    }
+    .chip:hover { border-color: rgba(232,235,230,0.28); }
+    .chip b {
+      font-weight: 600;
+      min-width: 1.1em;
+      text-align: center;
+    }
+    .chip--keep b { color: var(--sage-bright); }
+    .chip--skip b { color: var(--gold); }
+
+    /* ===== VIEWS ===== */
+    .view { min-height: 100dvh; display: none; }
+    .view.is-active { display: block; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 6rem 1.5rem 3rem;
+      text-align: center;
+    }
+    .hero-inner { max-width: 36rem; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .eyebrow::before, .eyebrow::after {
+      content: "";
+      width: 1.5rem;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+    .hero h1 {
+      margin: 0 0 1rem;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2.6rem, 8vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--sage-bright);
+    }
+    .hero p {
+      margin: 0 auto 2.25rem;
+      max-width: 28rem;
+      color: var(--mist);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+    .btn {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      border-radius: 999px;
+      padding: 1rem 1.8rem;
+      transition: transform 0.2s var(--ease-out), background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: var(--fog);
+      color: var(--ink);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+    }
+    .btn-primary:hover {
+      background: #fff;
+      box-shadow: 0 14px 50px rgba(143,168,140,0.18);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--fog);
+      border: 1px solid rgba(232,235,230,0.2);
+    }
+    .btn-ghost:hover { border-color: rgba(232,235,230,0.45); }
+    .hero-hint {
+      margin-top: 1.75rem;
+      font-size: 0.8rem;
+      color: var(--mist);
+      opacity: 0.8;
+    }
+
+    /* ===== DECK ===== */
+    .deck-shell {
+      min-height: 100dvh;
+      padding: 5.5rem 1rem 7.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .deck-meta {
+      width: var(--card-w);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.78rem;
+      color: var(--mist);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .deck-meta strong {
+      color: var(--fog);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+    }
+
+    .stack {
+      position: relative;
+      width: var(--card-w);
+      height: min(560px, calc(100dvh - 15rem));
+      touch-action: none;
+      user-select: none;
+    }
+
+    .card {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--ink-2);
+      border: 1px solid rgba(232,235,230,0.08);
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(255,255,255,0.02) inset;
+      transform-origin: 50% 110%;
+      will-change: transform;
+      cursor: grab;
+    }
+    .card:active { cursor: grabbing; }
+    .card.is-top { z-index: 5; }
+    .card.is-next { z-index: 4; }
+    .card.is-third { z-index: 3; }
+    .card.is-gone {
+      pointer-events: none;
+      transition: transform 0.45s var(--ease-out), opacity 0.45s var(--ease-out);
+    }
+
+    .card-media {
+      position: relative;
+      height: 52%;
+      background:
+        linear-gradient(145deg, #243028 0%, #121816 55%, #1a221c 100%);
+      overflow: hidden;
+    }
+    .card-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(168,196,163,0.25), transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(196,176,138,0.18), transparent 40%),
+        linear-gradient(180deg, transparent 40%, rgba(12,16,14,0.85) 100%);
+    }
+    .card-icon {
+      position: absolute;
+      left: 1.25rem;
+      bottom: 1.1rem;
+      z-index: 1;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(12,16,14,0.55);
+      border: 1px solid rgba(232,235,230,0.12);
+      font-size: 1.35rem;
+      backdrop-filter: blur(6px);
+    }
+    .card-stamp {
+      position: absolute;
+      top: 1.4rem;
+      z-index: 2;
+      padding: 0.45rem 0.8rem;
+      border: 2px solid;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: rotate(-12deg) scale(0.9);
+      transition: opacity 0.15s;
+      pointer-events: none;
+    }
+    .card-stamp--keep {
+      left: 1.2rem;
+      color: var(--ok);
+      border-color: var(--ok);
+      background: rgba(122,158,120,0.12);
+    }
+    .card-stamp--skip {
+      right: 1.2rem;
+      color: var(--danger);
+      border-color: var(--danger);
+      background: rgba(196,122,114,0.12);
+      transform: rotate(12deg) scale(0.9);
+    }
+    .card.show-keep .card-stamp--keep { opacity: 1; }
+    .card.show-skip .card-stamp--skip { opacity: 1; }
+
+    .card-body {
+      padding: 1.25rem 1.35rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      height: 48%;
+    }
+    .card-kicker {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .card-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.75rem;
+      line-height: 1.15;
+    }
+    .card-desc {
+      margin: 0;
+      color: var(--mist);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      flex: 1;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .card-tags span {
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(232,235,230,0.12);
+      color: var(--mist);
+      background: rgba(255,255,255,0.02);
+    }
+    .card-price {
+      font-size: 0.85rem;
+      color: var(--sage-bright);
+      font-weight: 500;
+    }
+
+    .controls {
+      width: var(--card-w);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .ctrl {
+      width: 3.6rem;
+      height: 3.6rem;
+      border-radius: 50%;
+      border: 1px solid rgba(232,235,230,0.14);
+      background: rgba(21,27,24,0.9);
+      color: var(--fog);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease-out), border-color 0.2s, background 0.2s;
+    }
+    .ctrl:hover { transform: translateY(-2px); }
+    .ctrl:active { transform: scale(0.96); }
+    .ctrl--skip:hover { border-color: var(--danger); color: var(--danger); }
+    .ctrl--keep:hover { border-color: var(--ok); color: var(--ok); background: rgba(122,158,120,0.1); }
+    .ctrl svg { width: 1.35rem; height: 1.35rem; }
+
+    .help-line {
+      font-size: 0.8rem;
+      color: var(--mist);
+      text-align: center;
+      max-width: 22rem;
+      line-height: 1.5;
+    }
+    .help-line kbd {
+      font-family: inherit;
+      font-size: 0.72rem;
+      border: 1px solid rgba(232,235,230,0.18);
+      border-radius: 4px;
+      padding: 0.05rem 0.35rem;
+      color: var(--fog);
+    }
+
+    /* ===== EMPTY / DONE ===== */
+    .done {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 6rem 1.5rem 3rem;
+    }
+    .done-card {
+      width: min(520px, 100%);
+      border: 1px solid rgba(232,235,230,0.1);
+      border-radius: 22px;
+      padding: 2rem 1.75rem;
+      background: linear-gradient(180deg, rgba(30,39,34,0.85), rgba(12,16,14,0.9));
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    }
+    .done-card h2 {
+      margin: 0 0 0.5rem;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 2.2rem;
+    }
+    .done-card > p {
+      margin: 0 0 1.5rem;
+      color: var(--mist);
+      line-height: 1.55;
+    }
+    .picked-list {
+      list-style: none;
+      margin: 0 0 1.5rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .picked-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(232,235,230,0.08);
+      font-size: 0.95rem;
+    }
+    .picked-list li span { color: var(--mist); font-size: 0.82rem; }
+    .picked-empty {
+      padding: 1.25rem;
+      border: 1px dashed rgba(232,235,230,0.15);
+      border-radius: 12px;
+      color: var(--mist);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .done-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    /* ===== PANELS ===== */
+    .panel-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s var(--ease-out);
+      z-index: 80;
+    }
+    .panel-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(400px, 100%);
+      height: 100%;
+      background: var(--ink-2);
+      border-left: 1px solid rgba(232,235,230,0.1);
+      z-index: 90;
+      transform: translateX(100%);
+      transition: transform 0.4s var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem;
+    }
+    .panel.is-open { transform: translateX(0); }
+    .panel header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .panel h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.6rem;
+    }
+    .panel-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .panel-list li {
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(232,235,230,0.08);
+    }
+    .panel-list li strong { display: block; margin-bottom: 0.2rem; }
+    .panel-list li span { color: var(--mist); font-size: 0.85rem; }
+    .panel-empty {
+      color: var(--mist);
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    /* ===== TUTORIAL ===== */
+    .tutorial {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(8,10,9,0.82);
+      display: none;
+      place-items: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(6px);
+    }
+    .tutorial.is-open { display: grid; }
+    .tutorial-box {
+      width: min(420px, 100%);
+      background: var(--ink-2);
+      border: 1px solid rgba(232,235,230,0.12);
       border-radius: 20px;
-      background: rgba(15, 23, 42, .72);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      padding: 1.75rem;
+      text-align: center;
     }
-    h1 { margin: 0 0 .5rem; font-size: clamp(1.8rem, 4vw, 2.4rem); letter-spacing: -.02em; }
-    p { margin: 0; line-height: 1.6; color: #b6c2dc; }
-    .badge {
-      display: inline-block; margin-bottom: 1rem; padding: .35rem .7rem;
-      border-radius: 999px; font-size: .8rem; font-weight: 600;
-      background: rgba(59,130,246,.18); color: #93c5fd; border: 1px solid rgba(147,197,253,.25);
+    .tutorial-box h2 {
+      margin: 0 0 0.75rem;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.9rem;
+    }
+    .tutorial-box p {
+      margin: 0 0 1.25rem;
+      color: var(--mist);
+      line-height: 1.55;
+    }
+    .tutorial-rows {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .tutorial-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.85rem;
+      align-items: center;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(232,235,230,0.08);
+    }
+    .tutorial-row .dir {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      border: 1px solid rgba(232,235,230,0.15);
+    }
+    .tutorial-row strong { display: block; font-size: 0.95rem; }
+    .tutorial-row span { color: var(--mist); font-size: 0.82rem; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0);
+      border: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <div class="badge">skyfacility.no</div>
-    <h1>Sky Facility</h1>
-    <p>Domenet er aktivt. Nettside hostes gratis via GitHub Pages med SSL. E-post fortsetter via Microsoft 365.</p>
-  </main>
+  <header class="topbar">
+    <a class="brand" href="#" id="brand-home">
+      <strong>Sky Renhold</strong>
+      <span>Premium · Bolig & næring</span>
+    </a>
+    <div class="top-actions">
+      <button type="button" class="chip chip--skip" id="btn-open-skip" aria-label="Vis hoppet over">
+        Hoppet over <b id="skip-count">0</b>
+      </button>
+      <button type="button" class="chip chip--keep" id="btn-open-keep" aria-label="Vis valgte tjenester">
+        Valgt <b id="keep-count">0</b>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="view is-active" id="view-hero" aria-label="Start">
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">The mindful clean</div>
+        <h1>Velg renhold<br /><em>med ett sveip</em></h1>
+        <p>
+          Sveip gjennom tjenestene våre. Behold det du trenger —
+          hopp over resten. Bygg din egen renholdsplan på sekunder.
+        </p>
+        <button type="button" class="btn btn-primary" id="btn-start">Start valg</button>
+        <p class="hero-hint">Venstre = hopp over · Høyre = behold</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECK -->
+  <section class="view" id="view-deck" aria-label="Velg tjenester">
+    <div class="deck-shell">
+      <div class="deck-meta">
+        <span>Anbefalte tjenester</span>
+        <strong><span id="progress-current">1</span> / <span id="progress-total">0</span></strong>
+      </div>
+
+      <div class="stack" id="stack" aria-live="polite"></div>
+
+      <div class="controls">
+        <button type="button" class="ctrl ctrl--skip" id="btn-skip" aria-label="Hopp over">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        <button type="button" class="ctrl ctrl--keep" id="btn-keep" aria-label="Behold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </button>
+      </div>
+      <p class="help-line">
+        Dra kortet, eller bruk knappene.
+        Tastatur: <kbd>←</kbd> hopp over · <kbd>→</kbd> behold
+      </p>
+    </div>
+  </section>
+
+  <!-- DONE -->
+  <section class="view" id="view-done" aria-label="Oppsummering">
+    <div class="done">
+      <div class="done-card">
+        <h2 id="done-title">Din renholdsplan</h2>
+        <p id="done-lead">Disse tjenestene har du valgt å beholde. Vi tar kontakt for et skreddersydd tilbud.</p>
+        <ul class="picked-list" id="picked-list"></ul>
+        <div class="picked-empty" id="picked-empty" hidden>Du hoppet over alle tjenestene. Prøv igjen for å bygge en plan.</div>
+        <div class="done-actions">
+          <a class="btn btn-primary" id="btn-mailto" href="#">Be om tilbud</a>
+          <button type="button" class="btn btn-ghost" id="btn-restart">Start på nytt</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tutorial -->
+  <div class="tutorial" id="tutorial" role="dialog" aria-modal="true" aria-labelledby="tut-title">
+    <div class="tutorial-box">
+      <h2 id="tut-title">Slik velger du</h2>
+      <p>Bygg din egen renholdsplan ved å sveipe kortene.</p>
+      <div class="tutorial-rows">
+        <div class="tutorial-row">
+          <div class="dir" aria-hidden="true">←</div>
+          <div>
+            <strong>Sveip venstre</strong>
+            <span>Hopp over tjenesten</span>
+          </div>
+        </div>
+        <div class="tutorial-row">
+          <div class="dir" aria-hidden="true">→</div>
+          <div>
+            <strong>Sveip høyre</strong>
+            <span>Behold i din plan</span>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" id="btn-tutorial-ok">Skjønner</button>
+    </div>
+  </div>
+
+  <!-- Side panels -->
+  <div class="panel-backdrop" id="panel-backdrop"></div>
+  <aside class="panel" id="panel-keep" aria-label="Valgte tjenester">
+    <header>
+      <h3>Valgt</h3>
+      <button type="button" class="chip" id="panel-keep-close">Lukk</button>
+    </header>
+    <ul class="panel-list" id="panel-keep-list"></ul>
+    <p class="panel-empty" id="panel-keep-empty">Ingen tjenester valgt ennå.</p>
+  </aside>
+  <aside class="panel" id="panel-skip" aria-label="Hoppet over">
+    <header>
+      <h3>Hoppet over</h3>
+      <button type="button" class="chip" id="panel-skip-close">Lukk</button>
+    </header>
+    <ul class="panel-list" id="panel-skip-list"></ul>
+    <p class="panel-empty" id="panel-skip-empty">Ingen hoppet over ennå.</p>
+  </aside>
+
+  <script>
+    const SERVICES = [
+      {
+        id: "weekly-home",
+        icon: "🏠",
+        kicker: "Bolig",
+        title: "Ukentlig hjemmerenhold",
+        desc: "Fast rytme for stue, kjøkken, bad og gulv. Tilpasset din bolig — med faste dager og samme team.",
+        tags: ["Abonnement", "Privat", "Fast team"],
+        price: "Fra kr 1 490 / besøk"
+      },
+      {
+        id: "office",
+        icon: "🏢",
+        kicker: "Næring",
+        title: "Kontorrenhold",
+        desc: "Daglig eller ukentlig renhold av kontorlandskap, møterom og fellesarealer. Diskret og uten forstyrrelser.",
+        tags: ["Kontor", "Kveldsjobb", "Avtale"],
+        price: "Etter areal"
+      },
+      {
+        id: "windows",
+        icon: "🪟",
+        kicker: "Spesial",
+        title: "Vinduspuss",
+        desc: "Inn- og utvendig puss med profesjonelt utstyr. Strekkfritt resultat for bolig, butikk og fasade.",
+        tags: ["Innvendig", "Utvendig", "Fasade"],
+        price: "Fra kr 890"
+      },
+      {
+        id: "move",
+        icon: "📦",
+        kicker: "Engangs",
+        title: "Flyttevask",
+        desc: "Grundig sluttrenhold ved inn- eller utflytting. Klar for overlevering til utleier eller ny eier.",
+        tags: ["Sjekkliste", "Dokumentasjon", "Boliger"],
+        price: "Fra kr 3 900"
+      },
+      {
+        id: "deep",
+        icon: "✨",
+        kicker: "Dyp",
+        title: "Hovedrengjøring",
+        desc: "Storvask med fokus på detaljer: skap, lister, armaturer og vanskelige flater. Perfekt vår- og høstrens.",
+        tags: ["Detalj", "Sesong", "Premium"],
+        price: "Fra kr 2 900"
+      },
+      {
+        id: "stairs",
+        icon: "🪜",
+        kicker: "Sameie",
+        title: "Trappevask & fellesareal",
+        desc: "Regelmessig renhold av trapperom, heis og fellesgang. Trygg drift for styret og beboere.",
+        tags: ["Sameie", "Ukentlig", "Avtale"],
+        price: "Etter avtale"
+      },
+      {
+        id: "kitchen",
+        icon: "🍽️",
+        kicker: "Kjøkken",
+        title: "Profesjonelt kjøkkenrenhold",
+        desc: "Rengjøring av kommersielle kjøkken, avtrekk og overflater etter mattrygghetskrav.",
+        tags: ["Horeca", "Hygiene", "Næring"],
+        price: "Etter behov"
+      },
+      {
+        id: "post-build",
+        icon: "🏗️",
+        kicker: "Bygg",
+        title: "Etterbyggvask",
+        desc: "Fjerning av støv, lim og byggrester etter rehabilitering eller nybygg. Klar til innflytting.",
+        tags: ["Bygg", "Engangs", "Industri"],
+        price: "Etter prosjekt"
+      },
+      {
+        id: "carpet",
+        icon: "🛋️",
+        kicker: "Tekstil",
+        title: "Teppe- og møbelrens",
+        desc: "Dyp rens av tepper, sofaer og tekstiler. Frisker opp uten unødvendig kjemikalier.",
+        tags: ["Tekstil", "Allergivennlig", "Boliger"],
+        price: "Fra kr 1 200"
+      },
+      {
+        id: "hygiene",
+        icon: "🧴",
+        kicker: "Helse",
+        title: "Hygiene & desinfeksjon",
+        desc: "Ekstra hygiene for klinikker, barnehager og sensitive miljøer. Dokumenterte metoder.",
+        tags: ["Klinikk", "Barnehage", "Sertifisert"],
+        price: "Etter standard"
+      }
+    ];
+
+    const STORAGE = {
+      keep: "sky_renhold_keep",
+      skip: "sky_renhold_skip",
+      tutorial: "sky_renhold_hide_tutorial"
+    };
+
+    const state = {
+      queue: [],
+      keep: load(STORAGE.keep),
+      skip: load(STORAGE.skip),
+      dragging: false,
+      startX: 0,
+      startY: 0,
+      dx: 0,
+      dy: 0,
+      activeId: null
+    };
+
+    function load(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "[]"); }
+      catch { return []; }
+    }
+    function save() {
+      localStorage.setItem(STORAGE.keep, JSON.stringify(state.keep));
+      localStorage.setItem(STORAGE.skip, JSON.stringify(state.skip));
+    }
+
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+
+    const els = {
+      hero: $("#view-hero"),
+      deck: $("#view-deck"),
+      done: $("#view-done"),
+      stack: $("#stack"),
+      skipCount: $("#skip-count"),
+      keepCount: $("#keep-count"),
+      progressCurrent: $("#progress-current"),
+      progressTotal: $("#progress-total"),
+      pickedList: $("#picked-list"),
+      pickedEmpty: $("#picked-empty"),
+      doneTitle: $("#done-title"),
+      doneLead: $("#done-lead"),
+      mailto: $("#btn-mailto"),
+      tutorial: $("#tutorial"),
+      panelBackdrop: $("#panel-backdrop"),
+      panelKeep: $("#panel-keep"),
+      panelSkip: $("#panel-skip"),
+      panelKeepList: $("#panel-keep-list"),
+      panelSkipList: $("#panel-skip-list"),
+      panelKeepEmpty: $("#panel-keep-empty"),
+      panelSkipEmpty: $("#panel-skip-empty")
+    };
+
+    function showView(name) {
+      $$(".view").forEach(v => v.classList.remove("is-active"));
+      $(`#view-${name}`).classList.add("is-active");
+    }
+
+    function remaining() {
+      return SERVICES.filter(s => !state.keep.includes(s.id) && !state.skip.includes(s.id));
+    }
+
+    function serviceById(id) {
+      return SERVICES.find(s => s.id === id);
+    }
+
+    function updateCounts() {
+      els.skipCount.textContent = state.skip.length;
+      els.keepCount.textContent = state.keep.length;
+      const rem = remaining().length;
+      const done = SERVICES.length - rem;
+      els.progressCurrent.textContent = Math.min(done + (rem ? 1 : 0), SERVICES.length);
+      els.progressTotal.textContent = SERVICES.length;
+    }
+
+    function renderStack() {
+      const rem = remaining();
+      els.stack.innerHTML = "";
+      state.queue = rem.map(s => s.id);
+
+      if (rem.length === 0) {
+        finish();
+        return;
+      }
+
+      // render bottom to top so first is on top
+      rem.slice(0, 4).reverse().forEach((svc, i, arr) => {
+        const depth = arr.length - 1 - i; // 0 = top
+        const card = document.createElement("article");
+        card.className = "card";
+        card.dataset.id = svc.id;
+        if (depth === 0) card.classList.add("is-top");
+        else if (depth === 1) card.classList.add("is-next");
+        else card.classList.add("is-third");
+
+        const scale = 1 - depth * 0.04;
+        const y = depth * 10;
+        card.style.transform = `translateY(${y}px) scale(${scale})`;
+        card.style.opacity = String(1 - depth * 0.08);
+
+        card.innerHTML = `
+          <div class="card-media">
+            <div class="card-icon" aria-hidden="true">${svc.icon}</div>
+            <div class="card-stamp card-stamp--keep">Behold</div>
+            <div class="card-stamp card-stamp--skip">Hopp over</div>
+          </div>
+          <div class="card-body">
+            <div class="card-kicker">${svc.kicker}</div>
+            <h2 class="card-title">${svc.title}</h2>
+            <p class="card-desc">${svc.desc}</p>
+            <div class="card-tags">${svc.tags.map(t => `<span>${t}</span>`).join("")}</div>
+            <div class="card-price">${svc.price}</div>
+          </div>
+        `;
+        els.stack.appendChild(card);
+      });
+
+      bindTopCard();
+      updateCounts();
+    }
+
+    function topCard() {
+      return els.stack.querySelector(".card.is-top");
+    }
+
+    function bindTopCard() {
+      const card = topCard();
+      if (!card) return;
+
+      const onPointerDown = (e) => {
+        if (e.button != null && e.button !== 0) return;
+        state.dragging = true;
+        state.activeId = card.dataset.id;
+        state.startX = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
+        state.startY = e.clientY ?? e.touches?.[0]?.clientY ?? 0;
+        state.dx = 0;
+        state.dy = 0;
+        card.setPointerCapture?.(e.pointerId);
+      };
+
+      const onPointerMove = (e) => {
+        if (!state.dragging || state.activeId !== card.dataset.id) return;
+        const x = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
+        const y = e.clientY ?? e.touches?.[0]?.clientY ?? 0;
+        state.dx = x - state.startX;
+        state.dy = y - state.startY;
+        const rot = state.dx * 0.06;
+        card.style.transform = `translate(${state.dx}px, ${state.dy * 0.35}px) rotate(${rot}deg)`;
+        card.classList.toggle("show-keep", state.dx > 60);
+        card.classList.toggle("show-skip", state.dx < -60);
+
+        // parallax next cards slightly
+        $$(".card.is-next, .card.is-third").forEach((c, i) => {
+          const depth = i + 1;
+          const pull = Math.min(Math.abs(state.dx) / 300, 1);
+          const scale = 1 - depth * 0.04 + pull * 0.03;
+          const yy = depth * 10 - pull * 6;
+          c.style.transform = `translateY(${yy}px) scale(${scale})`;
+        });
+      };
+
+      const onPointerUp = () => {
+        if (!state.dragging) return;
+        state.dragging = false;
+        const threshold = 110;
+        if (state.dx > threshold) decide("keep");
+        else if (state.dx < -threshold) decide("skip");
+        else {
+          card.style.transition = "transform 0.35s var(--ease-spring)";
+          card.style.transform = "";
+          card.classList.remove("show-keep", "show-skip");
+          $$(".card.is-next, .card.is-third").forEach((c, i) => {
+            const depth = i + 1;
+            c.style.transition = "transform 0.35s var(--ease-spring)";
+            c.style.transform = `translateY(${depth * 10}px) scale(${1 - depth * 0.04})`;
+          });
+          setTimeout(() => {
+            card.style.transition = "";
+            $$(".card").forEach(c => { c.style.transition = ""; });
+          }, 360);
+        }
+      };
+
+      card.addEventListener("pointerdown", onPointerDown);
+      window.addEventListener("pointermove", onPointerMove);
+      window.addEventListener("pointerup", onPointerUp);
+      // store cleanup on card for re-render
+      card._cleanup = () => {
+        card.removeEventListener("pointerdown", onPointerDown);
+        window.removeEventListener("pointermove", onPointerMove);
+        window.removeEventListener("pointerup", onPointerUp);
+      };
+    }
+
+    function decide(dir) {
+      const card = topCard();
+      if (!card) return;
+      card._cleanup?.();
+
+      const id = card.dataset.id;
+      if (dir === "keep" && !state.keep.includes(id)) state.keep.push(id);
+      if (dir === "skip" && !state.skip.includes(id)) state.skip.push(id);
+      // remove from other list if re-deciding
+      if (dir === "keep") state.skip = state.skip.filter(x => x !== id);
+      if (dir === "skip") state.keep = state.keep.filter(x => x !== id);
+      save();
+
+      const flyX = dir === "keep" ? window.innerWidth * 1.2 : -window.innerWidth * 1.2;
+      const rot = dir === "keep" ? 28 : -28;
+      card.classList.add("is-gone", dir === "keep" ? "show-keep" : "show-skip");
+      card.style.transform = `translate(${flyX}px, ${state.dy || 40}px) rotate(${rot}deg)`;
+      card.style.opacity = "0";
+
+      setTimeout(() => {
+        renderStack();
+      }, 420);
+    }
+
+    function finish() {
+      showView("done");
+      updateCounts();
+      const kept = state.keep.map(serviceById).filter(Boolean);
+      els.pickedList.innerHTML = "";
+      if (kept.length === 0) {
+        els.pickedEmpty.hidden = false;
+        els.pickedList.hidden = true;
+        els.doneTitle.textContent = "Ingen tjenester valgt";
+        els.doneLead.textContent = "Du hoppet over alt. Start på nytt for å bygge en renholdsplan.";
+        els.mailto.style.display = "none";
+      } else {
+        els.pickedEmpty.hidden = true;
+        els.pickedList.hidden = false;
+        els.doneTitle.textContent = "Din renholdsplan";
+        els.doneLead.textContent = "Disse tjenestene har du valgt. Send forespørsel, så lager vi et skreddersydd tilbud.";
+        els.mailto.style.display = "";
+        kept.forEach(s => {
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${s.icon} ${s.title}</strong><span>${s.price}</span>`;
+          els.pickedList.appendChild(li);
+        });
+        const names = kept.map(s => s.title).join("%0A- ");
+        const body = `Hei Sky Renhold,%0A%0AJeg ønsker tilbud på:%0A- ${names}%0A%0AMvh`;
+        els.mailto.href = `mailto:hei@skyfacility.no?subject=Forespørsel%20renhold&body=${body}`;
+      }
+    }
+
+    function openPanel(which) {
+      els.panelBackdrop.classList.add("is-open");
+      if (which === "keep") {
+        els.panelKeep.classList.add("is-open");
+        renderPanelList("keep");
+      } else {
+        els.panelSkip.classList.add("is-open");
+        renderPanelList("skip");
+      }
+    }
+    function closePanels() {
+      els.panelBackdrop.classList.remove("is-open");
+      els.panelKeep.classList.remove("is-open");
+      els.panelSkip.classList.remove("is-open");
+    }
+    function renderPanelList(type) {
+      const ids = type === "keep" ? state.keep : state.skip;
+      const list = type === "keep" ? els.panelKeepList : els.panelSkipList;
+      const empty = type === "keep" ? els.panelKeepEmpty : els.panelSkipEmpty;
+      list.innerHTML = "";
+      if (!ids.length) {
+        empty.hidden = false;
+        return;
+      }
+      empty.hidden = true;
+      ids.forEach(id => {
+        const s = serviceById(id);
+        if (!s) return;
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${s.icon} ${s.title}</strong><span>${s.desc}</span>`;
+        list.appendChild(li);
+      });
+    }
+
+    function startDeck() {
+      // rebuild queue from remaining
+      showView("deck");
+      renderStack();
+      if (!localStorage.getItem(STORAGE.tutorial)) {
+        els.tutorial.classList.add("is-open");
+      }
+    }
+
+    function resetAll() {
+      state.keep = [];
+      state.skip = [];
+      save();
+      updateCounts();
+      startDeck();
+    }
+
+    // Events
+    $("#btn-start").addEventListener("click", startDeck);
+    $("#btn-skip").addEventListener("click", () => decide("skip"));
+    $("#btn-keep").addEventListener("click", () => decide("keep"));
+    $("#btn-restart").addEventListener("click", resetAll);
+    $("#brand-home").addEventListener("click", (e) => {
+      e.preventDefault();
+      showView("hero");
+    });
+    $("#btn-tutorial-ok").addEventListener("click", () => {
+      localStorage.setItem(STORAGE.tutorial, "1");
+      els.tutorial.classList.remove("is-open");
+    });
+    $("#btn-open-keep").addEventListener("click", () => openPanel("keep"));
+    $("#btn-open-skip").addEventListener("click", () => openPanel("skip"));
+    $("#panel-keep-close").addEventListener("click", closePanels);
+    $("#panel-skip-close").addEventListener("click", closePanels);
+    els.panelBackdrop.addEventListener("click", closePanels);
+
+    window.addEventListener("keydown", (e) => {
+      if (!els.deck.classList.contains("is-active")) return;
+      if (els.tutorial.classList.contains("is-open")) return;
+      if (e.key === "ArrowLeft") { e.preventDefault(); decide("skip"); }
+      if (e.key === "ArrowRight") { e.preventDefault(); decide("keep"); }
+    });
+
+    // init
+    updateCounts();
+    // If user already finished previously and has no remaining, still show hero
+  </script>
 </body>
 </html>
