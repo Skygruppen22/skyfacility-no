@@ -265,6 +265,10 @@ function renderStack() {
         <h3 class="card-title">${svc.title}</h3>
         <p class="card-desc">${svc.desc}</p>
         <div class="card-tags">${svc.tags.map((t) => `<span>${t}</span>`).join("")}</div>
+        <div class="card-actions">
+          <button type="button" class="card-btn card-btn--skip" data-action="skip" aria-label="Hopp over ${svc.title}">Hopp over</button>
+          <button type="button" class="card-btn card-btn--keep" data-action="keep" aria-label="Ta med ${svc.title}">Ta med</button>
+        </div>
       </div>`;
     stack.appendChild(card);
   });
@@ -282,6 +286,8 @@ function bindTopCard() {
 
   const onDown = (e) => {
     if (e.button != null && e.button !== 0) return;
+    // Buttons on the card must not start a drag
+    if (e.target.closest(".card-btn, button, a, input, label")) return;
     state.dragging = true;
     state.activeId = card.dataset.id;
     state.startX = e.clientX;
@@ -324,6 +330,20 @@ function bindTopCard() {
     }
   };
 
+  const onActionClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const action = btn.getAttribute("data-action");
+    if (action === "keep" || action === "skip") decide(action);
+  };
+
+  const actionBtns = $$(".card-btn", card);
+  actionBtns.forEach((btn) => {
+    btn.addEventListener("click", onActionClick);
+    btn.addEventListener("pointerdown", (e) => e.stopPropagation());
+  });
+
   card.addEventListener("pointerdown", onDown);
   window.addEventListener("pointermove", onMove);
   window.addEventListener("pointerup", onUp);
@@ -331,6 +351,9 @@ function bindTopCard() {
     card.removeEventListener("pointerdown", onDown);
     window.removeEventListener("pointermove", onMove);
     window.removeEventListener("pointerup", onUp);
+    actionBtns.forEach((btn) => {
+      btn.removeEventListener("click", onActionClick);
+    });
   };
 }
 
