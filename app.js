@@ -104,9 +104,9 @@ const SERVICES = [
 ];
 
 const STORAGE = {
-  keep: "sky_facility_b2b_keep",
-  skip: "sky_facility_b2b_skip",
-  tutorial: "sky_facility_b2b_tutorial"
+  keep: "sky_facility_keep",
+  skip: "sky_facility_skip",
+  tutorial: "sky_facility_tutorial"
 };
 
 const state = {
@@ -370,7 +370,7 @@ function syncContactFromSelection() {
   const block = [
     "Hei Sky Facility,",
     "",
-    "Vi ønsker tilbud på følgende B2B-tjenester:",
+    "Vi ønsker tilbud på følgende tjenester:",
     ...kept.map((s) => `- ${s.title}`),
     "",
     "Areal / adresse:",
