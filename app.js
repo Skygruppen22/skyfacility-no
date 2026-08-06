@@ -101,7 +101,7 @@ const SERVICES = [
     image: "assets/hygiene.jpg",
     alt: "Rent toalett i næringsbygg"
   }
-]];
+];
 
 const STORAGE = {
   keep: "sky_facility_keep",
