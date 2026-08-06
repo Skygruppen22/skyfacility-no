@@ -1,4 +1,4 @@
-/* Sky Facility — B2B renhold site logic */
+/* Sky Facility — commercial cleaning site logic */
 
 const SERVICES = [
   {
